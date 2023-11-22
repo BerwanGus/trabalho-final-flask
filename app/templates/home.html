@@ -12,11 +12,34 @@
     {% block body %}
         <h1>Escolha seu classificador.</h1>
     
-        <a href="{{url_for('knn')}}">K-Nearest Neighbors</a><br>
-        <a href="{{url_for('mlp')}}">Multilayer Perceptron</a><br>
-        <a href="{{url_for('rf')}}">Random Forest</a><br>
-        <a href="{{url_for('svm')}}">Support Vector Machine</a><br>
+        {{ form.model }}
+
+        <div id='stateHolder'>
+            <form method='POST'>
+                {% include "knn.html" %}
+            </form>
+        </div>
 
     {% endblock body %}
 </body>
+<script>
+    let model = document.getElementById('model');
+    model.onchange = function(){
+        switch (model.value) {
+            case 'knn':
+                stateHTML = `{% include "knn.html" %}`
+                break
+            case 'mlp':
+                stateHTML = `{% include "mlp.html" %}`
+                break
+            case 'rf':
+                stateHTML = `{% include "rf.html" %}`
+                break
+            case 'svm':
+                stateHTML = `{% include "svm.html" %}`
+                break
+        }
+        document.getElementById('stateHolder').innerHTML = stateHTML
+    }
+</script>
 </html>
