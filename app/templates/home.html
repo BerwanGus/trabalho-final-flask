@@ -1,45 +1,48 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    {% block head %}
-        <title>Homepage</title>
-    {% endblock head %}
-</head>
+{% extends "base.html" %}
+
+<header>
+    {% block homebtn %}
+    {% endblock %}
+</header>
 
 <body>
-    {% block body %}
-        <h1>Escolha seu classificador.</h1>
+    {% block content %}
+    <h1>Escolha seu classificador.</h1>
     
-        {{ form.model }}
-
-        <div id='stateHolder'>
-            <form method='POST'>
-                {% include "knn.html" %}
-            </form>
-        </div>
-
-    {% endblock body %}
+    <ul>
+        <li><a href=" {{ url_for('train', model='knn') }} ">KNN</a></li>
+        <li><a href=" {{ url_for('train', model='mlp') }} ">MLP</a></li>
+        <li><a href=" {{ url_for('train', model='rf') }} ">RF</a></li>
+        <li><a href=" {{ url_for('train', model='svm') }} ">SVM</a></li>
+    </ul>
+    
+    
+    {% endblock content %}
+    
+    {% block script %}
+    <script>
+        // let model = document.getElementById('model');
+        // model.onchange = function(){
+            //     switch (model.value) {
+                //         case 'knn':
+                //         stateHTML = `
+                //                      
+                //         break
+                //         case 'mlp':
+                //         stateHTML = `
+                //                      
+                //         break
+                //         case 'rf':
+        //         stateHTML = `
+        //                      
+        //         break
+        //         case 'svm':
+        //         stateHTML = `
+        //                      
+        //         break
+        //     }
+        //     document.getElementById('stateHolder').innerHTML = stateHTML
+        // }
+    </script>
+{% endblock script %}
 </body>
-<script>
-    let model = document.getElementById('model');
-    model.onchange = function(){
-        switch (model.value) {
-            case 'knn':
-                stateHTML = `{% include "knn.html" %}`
-                break
-            case 'mlp':
-                stateHTML = `{% include "mlp.html" %}`
-                break
-            case 'rf':
-                stateHTML = `{% include "rf.html" %}`
-                break
-            case 'svm':
-                stateHTML = `{% include "svm.html" %}`
-                break
-        }
-        document.getElementById('stateHolder').innerHTML = stateHTML
-    }
-</script>
-</html>

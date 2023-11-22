@@ -5,8 +5,11 @@ from sklearn.svm import SVC
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import (accuracy_score, precision_score,
-                             recall_score, f1_score)
+                             recall_score, f1_score,
+                             confusion_matrix, ConfusionMatrixDisplay)
 import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
 
 class Pipeline():
     def __init__(self) -> None:
@@ -74,19 +77,25 @@ class Pipeline():
                                                             test_size=test_size,
                                                             random_state=92)
         preds = self.predict(X_test)
-        print('acc:', accuracy_score(preds, y_test))
-        print('micro pre:', precision_score(preds, y_test, average='micro'),
-              'macro pre:', precision_score(preds, y_test, average='macro'))
-        print('micro rec:', recall_score(preds, y_test, average='micro'),
-              'macro rec:', recall_score(preds, y_test, average='macro'))
-        print('micro f1:', f1_score(preds, y_test, average='micro'),
-              'macro f1:', f1_score(preds, y_test, average='macro'))
+        acc = round(accuracy_score(preds, y_test), 4)
+        macro_pre = round(precision_score(preds, y_test, average='macro'), 4)
+        macro_rec = round(recall_score(preds, y_test, average='macro'), 4)
+        macro_f1 = round(f1_score(preds, y_test, average='macro'), 4)
+        micro_f1 = round(f1_score(preds, y_test, average='micro'), 4)
 
+        cm = confusion_matrix(y_test, preds, labels=self.estimator.classes_)
+        plt.figure(figsize=(20,15))
+        sns.heatmap(cm, annot=True)
+        plt.savefig('app/static/images/cm.png')
+
+        return acc, macro_pre, macro_rec, macro_f1, micro_f1
+    
 def fit_knn(n_neighbors=5):
     knn = KNeighborsClassifier(n_neighbors)
     pipe = Pipeline()
     pipe.train(knn)
-    pipe.score()
+    
+    return pipe.score()
 
 def fit_mlp(hidden_sizes=(100,), activation='relu', lr=0.001):
     mlp = MLPClassifier(hidden_layer_sizes=hidden_sizes,
@@ -94,14 +103,14 @@ def fit_mlp(hidden_sizes=(100,), activation='relu', lr=0.001):
                         learning_rate_init=lr)
     pipe = Pipeline()
     pipe.train(mlp)
-    pipe.score()
+    return pipe.score()
 
 def fit_rf(n_estimators=100, max_depth=None):
     rf = RandomForestClassifier(n_estimators=n_estimators,
                                 max_depth=max_depth)
     pipe = Pipeline()
     pipe.train(rf)
-    pipe.score()
+    return pipe.score()
 
 def fit_svm(C=1.0, kernel='rbf', poly_degree=3):
     svm = SVC(C=C,
@@ -109,4 +118,4 @@ def fit_svm(C=1.0, kernel='rbf', poly_degree=3):
              degree=poly_degree)
     pipe = Pipeline()
     pipe.train(svm)
-    pipe.score()
+    return pipe.score()

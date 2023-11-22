@@ -1,9 +1,17 @@
-<h2>Multilayer Perceptron</h2>
+{% extends "base.html" %}
 
-{{ mlp.hidden_sizes.label }}
-{{ mlp.hidden_sizes }}<br><br>
-{{ mlp.activation.label }}
-{{ mlp.activation }}<br><br>
-{{ mlp.lr.label }}
-{{ mlp.lr }}<br><br>
-{{ mlp.submit }}<br><br>
+{% block content %}
+<div class='params'>
+<h2>Multilayer Perceptron</h2><br>
+
+<form method='POST'>
+    {{ mlp.hidden_sizes.label }}
+    {{ mlp.hidden_sizes }}<br><br>
+    {{ mlp.activation.label }}
+    {{ mlp.activation }}<br><br>
+    {{ mlp.lr.label }}
+    {{ mlp.lr }}<br><br>
+    {{ mlp.mlpsubmit }}<br><br>
+</form>
+</div>
+{% endblock content %}

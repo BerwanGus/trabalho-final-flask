@@ -1,9 +1,17 @@
-<h2>Support Vector Machine</h2>
+{% extends "base.html" %}
 
-{{ svm.C.label }}
-{{ svm.C }}<br><br>
-{{ svm.kernel.label }}
-{{ svm.kernel }}<br><br>
-{{ svm.degree.label }}
-{{ svm.degree }}<br><br>
-{{ svm.submit }}<br><br>
+{% block content %}
+<div class='params'>
+    <h2>Support Vector Machine</h2><br>
+
+    <form method='POST'>
+        {{ svm.C.label }}
+        {{ svm.C }}<br><br>
+        {{ svm.kernel.label }}
+        {{ svm.kernel }}<br><br>
+        {{ svm.degree.label }}
+        {{ svm.degree }}<br><br>
+        {{ svm.svmsubmit }}<br><br>
+</form>
+</div>
+{% endblock content %}

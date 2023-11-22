@@ -1,6 +1,13 @@
-<h2>K-Nearest Neighbors</h2>
+{% extends "base.html" %}
 
+{% block content %}
+<div class='params'>
+    <h2>K-Nearest Neighbors</h2><br>
 
-{{ knn.n_neighbors.label }}
-{{ knn.n_neighbors }}<br><br>
-{{ knn.submit }}
+    <form method='POST'>
+        {{ knn.n_neighbors.label }}
+        {{ knn.n_neighbors }}<br><br>
+        {{ knn.knnsubmit }}
+    </form>
+</div>
+{% endblock content %}

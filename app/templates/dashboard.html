@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% block head %}
+        <title>Bashboard</title>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    {% endblock head %}
+</head>
+
+<header></header>
+
+<body>
+    {% block content %}
+        <canvas id="myChart"></canvas>
+
+        <h2>{{ round.estimator }}</h2>
+        <ul>
+            <li>Accuracy: {{ round.acc }}</li>
+            <li>Macro precision: {{ round.macro_pre }}</li>
+            <li>Macro recall: {{ round.macro_rec }}</li>
+            <li>Macro F1-score: {{ round.macro_f1 }}</li>
+            <li>Micro F1-score: {{ round.micro_f1 }}</li>
+        </ul>
+        
+
+    {% endblock content %}
+
+    {% block script %}
+        <script>
+            const ctx = document.getElementById('myChart');
+
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: {{ labels | safe }},
+                    datasets: [
+                        {
+                            label: 'metric',
+                            data: {{ metrics | safe }},
+                            borderColor: 'rgb(75, 192, 192)'
+                        }
+                    ]
+                },
+                options: {
+                    responsive: false
+                }
+            });
+        </script>
+    {% endblock script %}
+
+</body>
+</html>

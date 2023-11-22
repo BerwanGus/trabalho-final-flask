@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    {% block head %}
+        <title>Homepage</title>
+    {% endblock head %}
+</head>
+
+<header>
+    {% block homebtn %}<a href="{{ url_for('homepage') }}">Página Inicial</a>{% endblock %}
+    {% block header %}
+        <a href="{{ url_for('dashboard', model='knn') }}">K-Nearest Neighbors</a>
+        <a href="{{ url_for('dashboard', model='mlp') }}">Multilayer Perceptron</a>
+        <a href="{{ url_for('dashboard', model='rf') }}">Random Forest</a>
+        <a href="{{ url_for('dashboard', model='svm') }}">Support Vector Machine</a>
+        <a href="{{ url_for('confusion_matrix', model='svm') }}">Confusion Matrix</a>
+    {% endblock %}
+</header>
+<body>
+    {% block content %}
+    {% endblock content %}
+
+    {% block script %}
+    {% endblock script %}
+</body>
+
+<footer>
+</footer>
+</html>

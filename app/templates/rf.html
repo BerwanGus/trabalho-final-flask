@@ -1,7 +1,15 @@
-<h2>Random Forest</h2>
+{% extends "base.html" %}
 
-{{ rf.n_estimators.label }}
-{{ rf.n_estimators }}<br><br>
-{{ rf.max_depth.label }}
-{{ rf.max_depth }}<br><br>
-{{ rf.submit }}<br><br>
+{% block content %}
+<div class='params'>
+<h2>Random Forest</h2><br>
+
+<form method='POST'>
+    {{ rf.n_estimators.label }}
+    {{ rf.n_estimators }}<br><br>
+    {{ rf.max_depth.label }}
+    {{ rf.max_depth }}<br><br>
+    {{ rf.rfsubmit }}<br><br>
+</form>
+</div>
+{% endblock content %}
